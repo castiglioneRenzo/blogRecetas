@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
+    'blog',
+    'mensajeria',
 ]
 
 # Configuracion de ckeditor uploader
