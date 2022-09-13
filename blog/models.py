@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.contrib.auth.models import User
 
 class Entrada(models.Model):
     # - Titulo
@@ -7,7 +8,7 @@ class Entrada(models.Model):
     # - Subtitulo
     subtitulo = models.CharField(max_length=60)
     # - Autor
-    autor = models.EmailField()
+    autor = models.ForeignKey(User)
     # - Fecha
     fecha = models.DateField()
     # - Cuerpo
