@@ -62,7 +62,7 @@ def mostrarEntradasUsuario(request):
 
 def mostrarEntrada(request, entr_id):
     entrada = Entrada.objects.get(id=entr_id)
-    return render(request, 'mostrarEntrada.html', {"entrada":entrada})
+    return render(request, 'album/mostrarEntrada.html', {"entrada":entrada})
 
 
 def likeEntrada(request, entr_id):
@@ -75,7 +75,7 @@ def likeEntrada(request, entr_id):
 def inicio(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
-    return render(request, 'album/index.html', {"entradas":entradas})
+    return render(request, 'album/index_logued.html', {"entradas":entradas})
 
 
 def login(request):

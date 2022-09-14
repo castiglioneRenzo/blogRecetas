@@ -18,3 +18,6 @@ class Entrada(models.Model):
     imagen = models.ImageField()
     # - Likes
     likes = models.BooleanField()
+    #__str__
+    def __str__(self):
+        return "Titulo: " + self.titulo + " Autor: " + str(self.autor)
