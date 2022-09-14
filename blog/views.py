@@ -75,4 +75,9 @@ def likeEntrada(request, entr_id):
 def inicio(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
-    return render(request, 'inicio.html', {"entradas":entradas})
+    return render(request, 'album/index.html', {"entradas":entradas})
+
+
+def login(request):
+    mensaje="Hola"
+    return render(request, 'sign-in/index.html',{"mensaje":mensaje})
