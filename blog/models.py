@@ -1,3 +1,4 @@
+from distutils.command.upload import upload
 from tkinter import CASCADE
 from django.db import models
 from ckeditor.fields import RichTextField
@@ -15,7 +16,7 @@ class Entrada(models.Model):
     # - Cuerpo
     cuerpo = RichTextField()
     # - Imagen
-    imagen = models.ImageField()
+    imagen = models.ImageField(null=True, blank=True)
     # - Likes
     likes = models.BooleanField()
     #__str__
