@@ -1,0 +1,42 @@
+{% extends 'album/index.html' %}
+{% load static %}
+{% block seccionCentral %}
+<h1 class="fw-light">Blog de Recetas</h1>
+        <p class="lead text-muted">En nuestro blog de recetas vas a encontrar las mejores recetas de cocina de Argentina y México</p>
+        {% if not request.user.is_authenticated %}
+        <p>
+          <a href="{% url 'registrarUsuario' %}" class="btn btn-primary my-2">Registrate</a>
+          <a href="{% url 'login' %}" class="btn btn-secondary my-2">Iniciar Sesión</a>
+        </p>
+        {% endif %}
+{% endblock %}
+{% block entradasBlock %}
+{% if entradas %}
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <!-- debe ir un for para mostrar las entradas. Llegan por parametro como 'entradas'-->        
+        {% for entry in entradas %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ entry.titulo }}</text></svg>
+
+            <div class="card-body">
+              <p class="card-text">{{ entry.subtitulo }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>
+                  {% if request.user.is_authenticated %}
+                    {% if entry.autor == request.user %}
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <small class="text-muted">Autor: {{ entry.autor }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}        
+      </div> 
+{% endif %}
+{% endblock %}

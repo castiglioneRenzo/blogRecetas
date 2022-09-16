@@ -1,8 +1,36 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from blog.models import *
 from blog.forms import *
+from django.contrib import messages
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import UserCreationForm
 
+def loginRequest(request):
+    if request.method == "POST":      
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:       
+            login(request, user)
+            return redirect('inicioUsuario')
+        else:
+            messages.success(request, "Usuario o contraseña invalidos...")
+            return redirect('login')
+    else:
+        return render(request, 'sign-in/index.html')
+
+def registrarUsuario(request):
+    if request.method == "POST":      
+        form = UserCreationForm(request.POST)
+        if (form.is_valid()):
+            form.save()
+            return redirect('inicioUsuario')
+        else:
+            messages.success(request, "Los datos ingresados No son validos...")
+            return redirect('registrarUsuario')
+    else:
+        return render(request, 'registro/registrarUsuario.html')
 
 @login_required
 def nuevaEntrada(request):
@@ -57,7 +85,7 @@ def editarEntrada(request, entr_id):
 def mostrarEntradasUsuario(request):
     '''mostrar las entradas de un usuario logueado'''
     entradas = Entrada.objects.filter(autor=request.user)
-    return render(request, 'entradasDeUsuario.html', {"entradas":entradas})
+    return render(request, 'album/entradasDeUsuario.html', {"entradas":entradas})
 
 
 def mostrarEntrada(request, entr_id):
@@ -75,9 +103,4 @@ def likeEntrada(request, entr_id):
 def inicio(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
-    return render(request, 'album/index_logued.html', {"entradas":entradas})
-
-
-def login(request):
-    mensaje="Hola"
-    return render(request, 'sign-in/index.html',{"mensaje":mensaje})
+    return render(request, 'album/inicioPublico.html', {"entradas":entradas})

@@ -1,0 +1,40 @@
+{% extends 'album/index.html' %}
+{% load static %}
+{% block seccionCentral %}
+  <h1 class="fw-light">Mis Recetas</h1>
+  <p class="lead text-muted">
+    <a href="#" class="btn btn-secondary my-2">Agregar Receta</a>
+  </p>        
+{% endblock %}
+{% block entradasBlock %}
+{% if entradas %}
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <!-- debe ir un for para mostrar las entradas. Llegan por parametro como 'entradas'-->        
+        {% for entry in entradas %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ entry.titulo }}</text></svg>
+
+            <div class="card-body">
+              <p class="card-text">{{ entry.subtitulo }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>                  
+                  {% if entry.autor == request.user %}
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>                   
+                  {% endif %}
+                </div>
+                <small class="text-muted">Autor: {{ entry.autor }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}        
+      </div> 
+{% else %}
+<div class="alert alert-info" role="alert">
+  Todavía no hay entradas, <a href="#" class="alert-link">haz click aquí</a> y comienza a agregar recetas a tu cuaderno!
+</div>
+{% endif %}
+{% endblock %}
