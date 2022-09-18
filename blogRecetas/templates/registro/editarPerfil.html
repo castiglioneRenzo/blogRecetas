@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block seccionCentral %}
-<h1 class="fw-light">Registrarme</h1>
+<h1 class="fw-light">Editar mi Perfil</h1>
 {% endblock %}
 
 {% block entradasBlock %}
@@ -47,18 +47,25 @@
         </div>                        
         <button type="submit" class="btn btn-primary">Registrarme</button>          
     </form> -->
+    {% if form %}
     <div class="shadow p-4 mb-5 bg-body rounded">
-    <form action="{% url 'registrarUsuario' %}" method="post">
+    <form action="{% url 'editarPerfil' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Registrarme</button>          
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>          
     </form>
     </div>
+    {% endif %}
     {% if messages %}
         {% for msg in messages %}
         <div class="alert alert-danger" role="alert">
             {{ msg }}
         </div>          
         {% endfor %}
+    {% endif %}
+    {% if mensaje %}        
+    <div class="alert alert-info" role="alert">
+        {{ mensaje }}
+    </div>                 
     {% endif %}
 {% endblock %}

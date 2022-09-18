@@ -4,7 +4,6 @@ from blog.models import *
 from blog.forms import *
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.forms import UserCreationForm
 
 def loginRequest(request):
     if request.method == "POST":      
@@ -22,15 +21,42 @@ def loginRequest(request):
 
 def registrarUsuario(request):
     if request.method == "POST":      
-        form = UserCreationForm(request.POST)
-        if (form.is_valid()):
+        form = RegisterUserForm(request.POST)
+        if (form.is_valid()):            
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
             form.save()
+            user = authenticate(username=username, password=password)
+            login(request, user)
             return redirect('inicioUsuario')
         else:
             messages.success(request, "Los datos ingresados No son validos...")
             return redirect('registrarUsuario')
     else:
-        return render(request, 'registro/registrarUsuario.html')
+        form = RegisterUserForm()
+        return render(request, 'registro/registrarUsuario.html', {"form":form})
+
+
+@login_required        
+def editarPerfil(request):
+    usuario=request.user
+    if (request.method=="POST"):
+        form= UserEditForm(request.POST)
+        if (form.is_valid()):
+            usuario.first_name=form.cleaned_data["first_name"]
+            usuario.last_name=form.cleaned_data["last_name"]
+            usuario.email=form.cleaned_data["email"]
+            usuario.password1=form.cleaned_data["password1"]
+            usuario.password2=form.cleaned_data["password2"]
+            usuario.save()
+            return render(request, 'registro/editarPerfil.html', {'mensaje':f"Perfil de {usuario} editado"})
+        else:
+            messages.success(request,"Los datos no son correctos")
+            return render(request, 'registro/editarPerfil.html')
+    else:
+        form= UserEditForm(instance=usuario)
+    return render(request, 'registro/editarPerfil.html', {'form':form, 'usuario':usuario})
+
 
 @login_required
 def nuevaEntrada(request):
