@@ -1,4 +1,5 @@
 from functools import reduce
+from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from blog.models import *
@@ -124,12 +125,12 @@ def mostrarEntrada(request, entr_id):
     entrada = Entrada.objects.get(id=entr_id)
     return render(request, 'album/mostrarEntrada.html', {"entrada":entrada})
 
-
+@login_required(login_url='login')
 def likeEntrada(request, entr_id):
     entrada=Entrada.objects.get(id=entr_id)
     entrada.likes = entrada.likes + 1
     entrada.save()
-    return render(request, 'mostrarEntrada.html', {"entrada":entrada, "mensaje":f"Le diste like a la publicacion {entrada.titulo}"})
+    return render(request, 'album/mostrarEntrada.html', {"entrada":entrada})
 
 
 def inicio(request):

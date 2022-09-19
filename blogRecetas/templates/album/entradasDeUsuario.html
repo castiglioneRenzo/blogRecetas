@@ -19,7 +19,8 @@
               <p class="card-text">{{ entry.subtitulo }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>                  
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>          
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'megusta' entry.id %}">Me Gusta</a>        
                   {% if entry.autor == request.user %}
                     <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'editarEntrada' entry.id %}">Edit</a>
                     <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'eliminarEntrada' entry.id %}">Delete</a>                   

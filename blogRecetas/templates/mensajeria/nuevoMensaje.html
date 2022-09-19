@@ -1,0 +1,26 @@
+{% extends album/index.html %}
+{% load static %}
+
+{% block seccionCentral %}
+<h1 class="fw-light">Nuevo Mensaje</h1>
+{% endblock %}
+
+{% block entradasBlock %}
+    {% if form %}
+    <div class="shadow p-4 mb-5 bg-body rounded">
+    <form action="{% url '#' entr_id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+    </div>
+    {% endif %}
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-danger" role="alert">
+            {{ msg }}
+        </div>          
+        {% endfor %}
+    {% endif %}
+{% endblock %}

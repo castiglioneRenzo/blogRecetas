@@ -148,13 +148,14 @@
         <!-- debe ir un for para mostrar las entradas. Llegan por parametro como 'entradas'-->                
       </div>
       <hr>
-      <small>Autor: {{ entrada.autor }}</small>
+      <small>Autor: {{ entrada.autor }} |  Likes: {{ entrada.likes }}</small>
       <hr>
       <div class="btn-group">                       
         {% if entrada.autor == request.user %}
           <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'editarEntrada' entrada.id %}">Edit</a>
           <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'eliminarEntrada' entrada.id %}">Delete</a>                   
         {% endif %}
+        <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'megusta' entrada.id %}">Me Gusta</a>
       </div>
     </div>
   </div>
