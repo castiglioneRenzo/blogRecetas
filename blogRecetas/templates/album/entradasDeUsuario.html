@@ -3,7 +3,7 @@
 {% block seccionCentral %}
   <h1 class="fw-light">Mis Recetas</h1>
   <p class="lead text-muted">
-    <a href="#" class="btn btn-secondary my-2">Agregar Receta</a>
+    <a href="{% url 'nuevaEntrada' %}" class="btn btn-secondary my-2">Agregar Receta</a>
   </p>        
 {% endblock %}
 {% block entradasBlock %}
@@ -21,8 +21,8 @@
                 <div class="btn-group">
                   <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>                  
                   {% if entry.autor == request.user %}
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                    <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>                   
+                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'editarEntrada' entry.id %}">Edit</a>
+                    <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'eliminarEntrada' entry.id %}">Delete</a>                   
                   {% endif %}
                 </div>
                 <small class="text-muted">Autor: {{ entry.autor }}</small>
@@ -34,7 +34,14 @@
       </div> 
 {% else %}
 <div class="alert alert-info" role="alert">
-  Todavía no hay entradas, <a href="#" class="alert-link">haz click aquí</a> y comienza a agregar recetas a tu cuaderno!
+  Todavía no hay entradas, <a href="{% url 'nuevaEntrada' %}" class="alert-link">haz click aquí</a> y comienza a agregar recetas a tu cuaderno!
 </div>
+{% endif %}
+{% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-warning" role="alert">
+            {{ msg }}
+        </div>          
+        {% endfor %}
 {% endif %}
 {% endblock %}

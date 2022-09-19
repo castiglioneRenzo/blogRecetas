@@ -10,4 +10,8 @@ urlpatterns = [
     path('logout', LogoutView.as_view(), name='logout'),
     path('registro', registrarUsuario, name='registrarUsuario'),
     path('editarperfil', editarPerfil, name='editarPerfil'),
+    path('nuevaEntrada', nuevaEntrada, name='nuevaEntrada'),
+    path('editarEntrada/<entr_id>', editarEntrada, name='editarEntrada'),
+    path('eliminarEntrada/<entr_id>', eliminarEntrada, name='eliminarEntrada'),
 ]
+# 'editarEntrada/(?P<entr_id>[^/]+)\\Z'

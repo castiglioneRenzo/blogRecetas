@@ -3,6 +3,7 @@ from tkinter import CASCADE
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 class Entrada(models.Model):
     # - Titulo
@@ -12,13 +13,15 @@ class Entrada(models.Model):
     # - Autor
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     # - Fecha
-    fecha = models.DateField()
+    fecha = models.DateField(default=now, editable=False)
     # - Cuerpo
     cuerpo = RichTextField()
     # - Imagen
     imagen = models.ImageField(null=True, blank=True)
     # - Likes
-    likes = models.BooleanField()
+    likes = models.IntegerField(default=0)
     #__str__
+
+
     def __str__(self):
         return "Titulo: " + self.titulo + " Autor: " + str(self.autor)

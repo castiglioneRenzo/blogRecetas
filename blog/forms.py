@@ -1,17 +1,20 @@
-from dataclasses import fields
-import email
 from tkinter import N
 from django import forms
 from ckeditor.widgets import CKEditorWidget
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-class EntradaFormulario():
-    titulo = forms.CharField(max_length=40)
-    subtitulo = forms.CharField(max_length=60)
-    autor = forms.EmailField()
-    fecha = forms.DateField()
+from blog.models import Entrada
+
+
+class EntradaFormulario(forms.Form):
+    titulo = forms.CharField(max_length=40, widget=forms.TextInput(attrs={'class':'form-control'}))
+    subtitulo = forms.CharField(max_length=60, widget=forms.TextInput(attrs={'class':'form-control'}))        
     cuerpo = forms.CharField(widget=CKEditorWidget())
-    imagen = forms.ImageField()
+    imagen = forms.ImageField(required=False)
+
+    class Meta:
+        model = Entrada
+        fields = ['titulo', 'subtitulo', 'cuerpo', 'imagen']
 
 
 class RegisterUserForm(UserCreationForm):    

@@ -1,3 +1,4 @@
+from functools import reduce
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from blog.models import *
@@ -62,17 +63,19 @@ def editarPerfil(request):
 def nuevaEntrada(request):
     ''' agregar una nueva entrada (debe estar logueado)'''
     if request.method == 'POST':
-        entradaForm = EntradaFormulario(request.POST)
+        entradaForm = EntradaFormulario(request.POST, request.FILES)
         if(entradaForm.is_valid()):
             info = entradaForm.cleaned_data
-            entrada = Entrada(titulo=info['titulo'], subtitulo=info['subitutlo'],autor=request.user, fecha=info['fecha'],cuerpo=info['cuerpo'], imagen=info['imagen'], likes=0)
+            entrada = Entrada(titulo=info['titulo'], subtitulo=info['subtitulo'],autor=request.user, cuerpo=info['cuerpo'], imagen=info['imagen'])
             entrada.save()
-            return render(request, 'inicio.html')
+            return redirect('inicioUsuario')
         else:
-            return render(request, 'nuevaEntrada.html', {"error":"Los datos ingresados no son válidos"})
+            print(entradaForm.errors)
+            messages.error(request,"Los datos ingresados no son válidos")
+            return render(request, 'album/nuevaEntrada.html')
     else:
         entradaForm = EntradaFormulario()
-    return render(request, 'nuevaEntrada.html', {"formulario": entradaForm})
+        return render(request, 'album/nuevaEntrada.html', {"form": entradaForm})
 
 
 @login_required
@@ -81,8 +84,10 @@ def eliminarEntrada(request, entr_id):
     entrada = Entrada.objects.get(id=entr_id)
     titulo = entrada.titulo
     entrada.delete()
-    entradas = Entrada.objects.filter(autor=request.user)
-    return render(request, 'entradasDeUsuario.html', {"entradas":entradas,"mensaje":f"Entrada {titulo} eliminada"})
+    print(entr_id)    
+    print(entrada)
+    messages.success(request, f"Entrada '{titulo}' eliminada")
+    return redirect('inicioUsuario')
 
 
 @login_required
@@ -90,21 +95,22 @@ def editarEntrada(request, entr_id):
     ''' editar una entrada en particular (debe ser el usuario que la creó)'''
     entrada = Entrada.objects.get(id=entr_id)
     if request.method == 'POST':
-        entradaForm = EntradaFormulario(request.POST)
+        entradaForm = EntradaFormulario(request.POST, request.FILES)
         if(entradaForm.is_valid()):
             info = entradaForm.cleaned_data
             entrada.titulo = info['titulo']
-            entrada.subtitulo = info['subtitulo']
-            entrada.fecha = info['fecha']
+            entrada.subtitulo = info['subtitulo']            
             entrada.cuerpo = info['cuerpo']
             entrada.imagen = info['imagen']
             entrada.save()
-            return render(request, 'inicio.html')
+            return redirect('inicioUsuario')
         else:
-            return render(request, 'nuevaEntrada.html', {"error":"Los datos ingresados no son válidos"})
+            print(entradaForm.errors)
+            messages.success(request,"Los datos no son correctos")
+            return render(request, 'album/editarEntrada.html')
     else:
         entradaForm = EntradaFormulario(initial={"titulo":entrada.titulo, "subtitulo":entrada.subtitulo,"fecha":entrada.fecha,"cuerpo":entrada.cuerpo,"imagen":entrada.imagen})
-    return render(request, 'nuevaEntrada.html', {"formulario": entradaForm, "entr_titulo":entr_id})
+    return render(request, 'album/editarEntrada.html', {"form": entradaForm, "entr_id":entr_id})
 
 
 @login_required

@@ -1,0 +1,32 @@
+{% extends 'album/index.html' %}
+{% load static %}
+
+{% block seccionCentral %}
+<h1 class="fw-light">Nueva Receta</h1>
+{% endblock %}
+
+{% block entradasBlock %}
+    {% if form %}
+    <div class="shadow p-4 mb-5 bg-body rounded">
+    <form action="{% url 'nuevaEntrada' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>          
+    </form>
+    </div>
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                {{ message }}
+            </div>  
+            {% endif %}                        
+        {% endfor %}
+    {% endif %}
+{% endblock %}
