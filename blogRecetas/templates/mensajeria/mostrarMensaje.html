@@ -1,26 +1,30 @@
-{% extends album/index.html %}
+{% extends 'album/index.html' %}
 {% load static %}
 
 {% block seccionCentral %}
-<h1 class="fw-light">Nuevo Mensaje</h1>
+<h1 class="fw-light"></h1>
 {% endblock %}
 
 {% block entradasBlock %}
-    {% if form %}
-    <div class="shadow p-4 mb-5 bg-body rounded">
-    <form action="{% url '#' entr_id %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.media }}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
+    <div>
+    <h5>De: {{mensaje.emisor}}</h5>
+    <h5>Para: {{mensaje.remitente}}</h5>
+        <div>
+            <h5><small class="text-muted">Asunto: {{mensaje.asunto}}</small></h5>
+        </div>
+        <hr>
+        <div>
+            <p>
+                {{mensaje.cuerpo|safe}}
+            </p>
+        </div>
     </div>
-    {% endif %}
     {% if messages %}
         {% for msg in messages %}
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
             {{ msg }}
-        </div>          
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>           
         {% endfor %}
     {% endif %}
 {% endblock %}

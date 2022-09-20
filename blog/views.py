@@ -14,10 +14,10 @@ def loginRequest(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:       
             login(request, user)
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             messages.success(request, "Usuario o contraseña invalidos...")
-            return redirect('login')
+            return redirect('blog:login')
     else:
         return render(request, 'sign-in/index.html')
 
@@ -30,10 +30,10 @@ def registrarUsuario(request):
             form.save()
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             messages.success(request, "Los datos ingresados No son validos...")
-            return redirect('registrarUsuario')
+            return redirect('blog:registrarUsuario')
     else:
         form = RegisterUserForm()
         return render(request, 'registro/registrarUsuario.html', {"form":form})
@@ -69,7 +69,7 @@ def nuevaEntrada(request):
             info = entradaForm.cleaned_data
             entrada = Entrada(titulo=info['titulo'], subtitulo=info['subtitulo'],autor=request.user, cuerpo=info['cuerpo'], imagen=info['imagen'])
             entrada.save()
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             print(entradaForm.errors)
             messages.error(request,"Los datos ingresados no son válidos")
@@ -88,7 +88,7 @@ def eliminarEntrada(request, entr_id):
     print(entr_id)    
     print(entrada)
     messages.success(request, f"Entrada '{titulo}' eliminada")
-    return redirect('inicioUsuario')
+    return redirect('blog:inicioUsuario')
 
 
 @login_required
@@ -104,7 +104,7 @@ def editarEntrada(request, entr_id):
             entrada.cuerpo = info['cuerpo']
             entrada.imagen = info['imagen']
             entrada.save()
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             print(entradaForm.errors)
             messages.success(request,"Los datos no son correctos")

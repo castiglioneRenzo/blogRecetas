@@ -88,8 +88,9 @@
           <ul class="list-unstyled">
             <li><a href="/admin" class="text-white">Administrador</a></li>
             {% if request.user.is_authenticated %}
-            <li><a href="{% url 'inicioUsuario' %}" class="text-white">Mis Entradas</a></li>
-            <li><a href="{% url 'editarPerfil' %}" class="text-white">Editar Perfil ( {{ user.first_name }} {{ user.last_name }} )</a></li>
+            <li><a href="{% url 'blog:inicioUsuario' %}" class="text-white">Mis Entradas</a></li>
+            <li><a href="{% url 'blog:editarPerfil' %}" class="text-white">Editar Perfil ( {{ user.first_name }} {{ user.last_name }} )</a></li>
+            <li><a href="{% url 'mensajeria:bandejaEntrada' %}" class="text-white">Mensajes</a></li>            
             {% endif %}
             <li><a href="#" class="text-white">Email me</a></li>
           </ul>
@@ -100,17 +101,17 @@
   <!--esta es la barra sin colapsar -->
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
-      <a href="{% url 'inicio' %}" class="navbar-brand d-flex align-items-center">
+      <a href="{% url 'blog:inicio' %}" class="navbar-brand d-flex align-items-center">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
         <strong>Recetas</strong>
       </a>      
       {% if not request.user.is_authenticated %}
-      <a class="navbar-toggler" href="{% url 'login' %}" style="align-self: right; align-items: right;position: absolute;top: 25%; left: 75%;">
+      <a class="navbar-toggler" href="{% url 'blog:login' %}" style="align-self: right; align-items: right;position: absolute;top: 25%; left: 75%;">
         <strong>Login</strong>
       </a>
       {% endif %}
       {% if request.user.is_authenticated %}
-      <a class="navbar-toggler" href="{% url 'logout' %}?next={% url 'inicio' %}" style="align-self: right; align-items: right;position: absolute;top: 25%; left: 75%;">
+      <a class="navbar-toggler" href="{% url 'blog:logout' %}?next={% url 'blog:inicio' %}" style="align-self: right; align-items: right;position: absolute;top: 25%; left: 75%;">
         <strong>Logout</strong>
       </a>
       {% endif %}
