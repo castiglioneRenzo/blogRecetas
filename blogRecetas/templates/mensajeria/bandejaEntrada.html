@@ -27,7 +27,7 @@
                 <td>{{ mensaje.emisor }}</td>
                 <td>{{ mensaje.remitente }}</td>
                 <td>{{ mensaje.asunto }}</td>
-                <td><a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'mensajeria:eliminarMensaje' mensaje.id %}">Delete</a>
+                <td><a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'mensajeria:eliminarMensaje' mensaje.id %}">Borrar</a>
                     <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mensajeria:mostrarMensaje' mensaje.id %}">Ver</a>
                 </td>              
                 </a>

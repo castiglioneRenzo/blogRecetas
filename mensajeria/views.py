@@ -1,4 +1,5 @@
 from contextlib import redirect_stderr
+from urllib import request
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from mensajeria.forms import MensajeForm
@@ -30,24 +31,41 @@ def nuevoMensaje(request):
 def eliminarMensaje(request, id):
     ''' se elimina un mensaje de la bandeja de mensajes de un usuario logueado '''
     mensaje = Mensaje.objects.get(id=id)
-    mensaje.delete()
-    messages.success(request, "Se elimino el mensaje")
-    return redirect('mensajeria:bandejaEntrada')
+    if request.method == 'POST':
+        mensaje = Mensaje.objects.get(id=id)
+        mensaje.delete()
+        messages.success(request, "Se elimino el mensaje")
+        return redirect('mensajeria:bandejaEntrada')
+    else:
+        return render(request, 'mensajeria/confirmarBorrado.html', {'mensaje':mensaje})
 
 
 @login_required
 def mostrarMensaje(request, id):
     ''' se muestra un mensaje y se marca como leído '''
     mensaje = Mensaje.objects.get(id=id)
-    # mensaje.visto=True
-    # mensaje.save()
+    if request.user == mensaje.remitente:
+        mensaje.leido=True
+        mensaje.save()    
     return render(request, 'mensajeria/mostrarMensaje.html', {'mensaje':mensaje})
 
 
 @login_required
-def responderMensaje(request):
+def responderMensaje(request, id):
     ''' se responde a un mensaje en la bandeja de mensajes de un usuario logueado '''
-    pass
+    mensaje = Mensaje.objects.get(id=id)
+    if request.method == "POST":
+        form = MensajeForm(request.POST)
+        if(form.is_valid()):
+            form.save()
+            redirect('mensajeria:bandejaEntrada')
+        else:
+            messages.error("Hubo un error, no se pudo responder el mensaje")
+            redirect('mensajeria:mostrarMensaje', id)
+    else:
+        asunto = 'Re: '+mensaje.asunto
+        form = MensajeForm(initial={'emisor':mensaje.remitente,'remitente':mensaje.emisor, 'cuerpo':mensaje.cuerpo,'asunto':asunto})
+    return render(request, 'mensajeria/nuevoMensaje.html', {'form':form})
 
 
 @login_required

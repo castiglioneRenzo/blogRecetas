@@ -7,6 +7,7 @@
 
 {% block entradasBlock %}
     <div>
+        <a href="{% url 'mensajeria:bandejaEntrada' %}" class="btn btn-sm btn-outline-primary">Volver</a>
     <h5>De: {{mensaje.emisor}}</h5>
     <h5>Para: {{mensaje.remitente}}</h5>
         <div>
@@ -18,7 +19,14 @@
                 {{mensaje.cuerpo|safe}}
             </p>
         </div>
+        <hr>
+        <strong>
+            Visto: {% if mensaje.leido %} Si {% else %} No {% endif %}
+        </strong>
     </div>
+    {% if mensaje.emisor != request.user %}
+    <a href="{% url 'mensajeria:responderMensaje' mensaje.id %}" class="btn btn-primary">Responder</a>
+    {% endif %}
     {% if messages %}
         {% for msg in messages %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">

@@ -8,7 +8,8 @@
 {% block entradasBlock %}
     {% if form %}
     <div class="shadow p-4 mb-5 bg-body rounded">
-    <form action="{% url 'editarPerfil' %}" method="post">
+        <a href="{% url 'blog:inicioUsuario' %}" class="btn btn-sm btn-outline-primary">Volver</a>
+    <form action="{% url 'blog:editarPerfil' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Guardar cambios</button>          

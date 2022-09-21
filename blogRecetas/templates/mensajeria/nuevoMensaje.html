@@ -8,6 +8,7 @@
 {% block entradasBlock %}
     {% if form %}
     <div class="shadow p-4 mb-5 bg-body rounded">
+        <a href="{% url 'mensajeria:bandejaEntrada' %}" class="btn btn-sm btn-outline-primary">Volver</a>
     <form action="{% url 'mensajeria:nuevoMensaje' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}

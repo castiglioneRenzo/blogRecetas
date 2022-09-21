@@ -139,6 +139,7 @@
   <!-- aca van las entradas -->
 
   <div class="album py-5 bg-light">
+    <a href="{% url 'blog:inicio' %}" class="btn btn-sm btn-outline-primary">Volver</a>
     <div class="container">
       {% if entrada.imagen %}
       <p><img src="{{ entrada.imagen.url }}" height="400px" width="600px"></p>
