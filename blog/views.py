@@ -128,8 +128,11 @@ def mostrarEntrada(request, entr_id):
 @login_required(login_url='login')
 def likeEntrada(request, entr_id):
     entrada=Entrada.objects.get(id=entr_id)
-    entrada.likes = entrada.likes + 1
-    entrada.save()
+    user=request.user        
+    if(Entrada.likes.through.objects.filter(user_id=user.id).exists()):
+        entrada.likes.remove(user.id)
+    else:
+        entrada.likes.add(user)
     return render(request, 'album/mostrarEntrada.html', {"entrada":entrada})
 
 

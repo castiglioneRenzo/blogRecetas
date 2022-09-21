@@ -19,9 +19,13 @@ class Entrada(models.Model):
     # - Imagen
     imagen = models.ImageField(null=True, blank=True)
     # - Likes
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='likes')
     #__str__
 
 
     def __str__(self):
         return "Titulo: " + self.titulo + " Autor: " + str(self.autor)
+
+    @property
+    def totalLikes(self):
+        return self.likes.count()

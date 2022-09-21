@@ -148,7 +148,7 @@
         <!-- debe ir un for para mostrar las entradas. Llegan por parametro como 'entradas'-->                
       </div>
       <hr>
-      <small>Autor: {{ entrada.autor }} |  Likes: {{ entrada.likes }}</small>
+      <small>Autor: {{ entrada.autor }} |  Likes: {{ entrada.totalLikes }}</small>
       <hr>
       <div class="btn-group">                       
         {% if entrada.autor == request.user %}
