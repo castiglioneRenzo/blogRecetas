@@ -1,0 +1,47 @@
+{% extends 'album/index.html' %}
+{% load static %}
+
+{% block seccionCentral %}
+<h1 class="fw-light">Bandeja de Entrada</h1>
+    <p>
+        <a href="{% url 'mensajeria:nuevoMensaje' %}" class="btn btn-primary my-2">Nuevo Mensaje</a>
+    </p>
+{% endblock %}
+
+{% block entradasBlock %}    
+    <div class="shadow p-4 mb-5 bg-body rounded">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">De</th>
+                <th scope="col">Para</th>
+                <th scope="col">Asunto</th>
+                </tr>
+            </thead>            
+            <tbody>
+                {% for mensaje in mensajes %}
+                
+                <tr href="{% url 'mensajeria:mostrarMensaje' mensaje.id %}"><a href="{% url 'mensajeria:mostrarMensaje' mensaje.id %}">
+                <th scope="row">{{ mensaje.id }}</th>
+                <td>{{ mensaje.emisor }}</td>
+                <td>{{ mensaje.remitente }}</td>
+                <td>{{ mensaje.asunto }}</td>
+                <td><a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'mensajeria:eliminarMensaje' mensaje.id %}">Borrar</a>
+                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mensajeria:mostrarMensaje' mensaje.id %}">Ver</a>
+                </td>              
+                </a>
+                </tr>                        
+                {% endfor %}
+            </tbody>            
+            </table>
+    </div>
+    {% if messages %}
+        {% for msg in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>              
+        {% endfor %}
+    {% endif %}
+{% endblock %}

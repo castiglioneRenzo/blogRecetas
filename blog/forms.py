@@ -12,10 +12,6 @@ class EntradaFormulario(forms.Form):
     cuerpo = forms.CharField(widget=CKEditorWidget())
     imagen = forms.ImageField(required=False)
 
-    class Meta:
-        model = Entrada
-        fields = ['titulo', 'subtitulo', 'cuerpo', 'imagen']
-
 
 class RegisterUserForm(UserCreationForm):    
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))    

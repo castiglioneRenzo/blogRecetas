@@ -14,10 +14,10 @@ def loginRequest(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:       
             login(request, user)
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             messages.success(request, "Usuario o contraseña invalidos...")
-            return redirect('login')
+            return redirect('blog:login')
     else:
         return render(request, 'sign-in/index.html')
 
@@ -30,10 +30,10 @@ def registrarUsuario(request):
             form.save()
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
             messages.success(request, "Los datos ingresados No son validos...")
-            return redirect('registrarUsuario')
+            return redirect('blog:registrarUsuario')
     else:
         form = RegisterUserForm()
         return render(request, 'registro/registrarUsuario.html', {"form":form})
@@ -69,9 +69,8 @@ def nuevaEntrada(request):
             info = entradaForm.cleaned_data
             entrada = Entrada(titulo=info['titulo'], subtitulo=info['subtitulo'],autor=request.user, cuerpo=info['cuerpo'], imagen=info['imagen'])
             entrada.save()
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
-            print(entradaForm.errors)
             messages.error(request,"Los datos ingresados no son válidos")
             return render(request, 'album/nuevaEntrada.html')
     else:
@@ -83,12 +82,14 @@ def nuevaEntrada(request):
 def eliminarEntrada(request, entr_id):
     ''' eliminar entrada (debe ser el usuario que la creó) '''
     entrada = Entrada.objects.get(id=entr_id)
-    titulo = entrada.titulo
-    entrada.delete()
-    print(entr_id)    
-    print(entrada)
-    messages.success(request, f"Entrada '{titulo}' eliminada")
-    return redirect('inicioUsuario')
+    if request.method == 'POST':    
+        entrada = Entrada.objects.get(id=entr_id)
+        titulo = entrada.titulo
+        entrada.delete()
+        messages.success(request, f"Entrada '{titulo}' eliminada")
+        return redirect('blog:inicioUsuario')
+    else:
+        return render(request, 'album/confirmarBorrado.html', {'entrada':entrada})
 
 
 @login_required
@@ -104,9 +105,8 @@ def editarEntrada(request, entr_id):
             entrada.cuerpo = info['cuerpo']
             entrada.imagen = info['imagen']
             entrada.save()
-            return redirect('inicioUsuario')
+            return redirect('blog:inicioUsuario')
         else:
-            print(entradaForm.errors)
             messages.success(request,"Los datos no son correctos")
             return render(request, 'album/editarEntrada.html')
     else:
@@ -125,7 +125,7 @@ def mostrarEntrada(request, entr_id):
     entrada = Entrada.objects.get(id=entr_id)
     return render(request, 'album/mostrarEntrada.html', {"entrada":entrada})
 
-@login_required(login_url='login')
+@login_required(login_url='blog:login')
 def likeEntrada(request, entr_id):
     entrada=Entrada.objects.get(id=entr_id)
     user=request.user        
@@ -140,3 +140,7 @@ def inicio(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
     return render(request, 'album/inicioPublico.html', {"entradas":entradas})
+
+
+def about(request):
+    return render(request, 'album/about.html')

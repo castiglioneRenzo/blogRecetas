@@ -3,7 +3,7 @@
 {% block seccionCentral %}
   <h1 class="fw-light">Mis Recetas</h1>
   <p class="lead text-muted">
-    <a href="{% url 'nuevaEntrada' %}" class="btn btn-secondary my-2">Agregar Receta</a>
+    <a href="{% url 'blog:nuevaEntrada' %}" class="btn btn-secondary my-2">Agregar Receta</a>
   </p>        
 {% endblock %}
 {% block entradasBlock %}
@@ -19,11 +19,11 @@
               <p class="card-text">{{ entry.subtitulo }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>          
-                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'megusta' entry.id %}">Me Gusta</a>        
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:mostrarEntrada' entry.id %}">View</a>          
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:megusta' entry.id %}">Me Gusta</a>        
                   {% if entry.autor == request.user %}
-                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'editarEntrada' entry.id %}">Edit</a>
-                    <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'eliminarEntrada' entry.id %}">Delete</a>                   
+                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:editarEntrada' entry.id %}">Edit</a>
+                    <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'blog:eliminarEntrada' entry.id %}">Delete</a>                   
                   {% endif %}
                 </div>
                 <small class="text-muted">Autor: {{ entry.autor }}</small>
@@ -35,7 +35,7 @@
       </div> 
 {% else %}
 <div class="alert alert-info" role="alert">
-  Todavía no hay entradas, <a href="{% url 'nuevaEntrada' %}" class="alert-link">haz click aquí</a> y comienza a agregar recetas a tu cuaderno!
+  Todavía no hay entradas, <a href="{% url 'blog:nuevaEntrada' %}" class="alert-link">haz click aquí</a> y comienza a agregar recetas a tu cuaderno!
 </div>
 {% endif %}
 {% if messages %}

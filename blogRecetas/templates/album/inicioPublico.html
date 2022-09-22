@@ -5,8 +5,8 @@
         <p class="lead text-muted">En nuestro blog de recetas vas a encontrar las mejores recetas de cocina de Argentina y México</p>
         {% if not request.user.is_authenticated %}
         <p>
-          <a href="{% url 'registrarUsuario' %}" class="btn btn-primary my-2">Registrate</a>
-          <a href="{% url 'login' %}" class="btn btn-secondary my-2">Iniciar Sesión</a>
+          <a href="{% url 'blog:registrarUsuario' %}" class="btn btn-primary my-2">Registrate</a>
+          <a href="{% url 'blog:login' %}" class="btn btn-secondary my-2">Iniciar Sesión</a>
         </p>
         {% endif %}
 {% endblock %}
@@ -23,12 +23,12 @@
               <p class="card-text">{{ entry.subtitulo }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'mostrarEntrada' entry.id %}">View</a>
-                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'megusta' entry.id %}">Me Gusta</a>
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:mostrarEntrada' entry.id %}">View</a>
+                  <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:megusta' entry.id %}">Me Gusta</a>
                   {% if request.user.is_authenticated %}
                     {% if entry.autor == request.user %}
-                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'editarEntrada' entry.id %}">Edit</a>
-                    <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'eliminarEntrada' entry.id %}">Delete</a>
+                    <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'blog:editarEntrada' entry.id %}">Edit</a>
+                    <a type="button" class="btn btn-sm btn-outline-danger" href="{% url 'blog:eliminarEntrada' entry.id %}">Delete</a>
                     {% endif %}
                   {% endif %}
                 </div>
