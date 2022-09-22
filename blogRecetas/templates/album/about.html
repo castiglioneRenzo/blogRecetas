@@ -1,0 +1,39 @@
+{% extends 'album/index.html' %}
+{% load static %}
+
+{% block seccionCentral %}
+<p class="lead text-muted"></p>
+<img src="media/about/about1.jpg" style="object-fit: cover;width:100%;height:100%; object-position: center;">
+{% endblock %}
+
+{% block entradasBlock %}  
+<div class="shadow p-4 mb-5 bg-body rounded">
+    <p>
+        <div class="shadow p-3 mb-3 bg-body rounded">
+            <h4>Sobre el Blog</h4>
+            Nuestro blog está orientado a guardar recetas de cocina
+            Se pueden agregar recetas al blog, envíar mensajes a otros usuarios, dar like a recetas de otros usuarios. Para todo 
+            esto debes estar registrado en nuestro blog.
+            </div>
+        <div class="shadow p-3 mb-3 bg-body rounded">
+            <h4>Sobre Nosotros</h4>
+        Somos alumnos del curso de Python de Coderhouse, comisión 3110 <br>
+        Nuestros nombres son:
+        <ul>
+            <li>Renzo Castiglione</li>
+            <li>Ricarco López</li>            
+        </ul>
+        <hr>
+        <h5><strong class="shadow-sm">Renzo Castiglione</strong></h5>
+        <p class="lead text-muted">
+            Soy estudiante de Licenciatura en Informática, tengo 24 años y estoy aprendiendo Python.    
+        </p>
+        <h5><strong class="shadow-sm">Ricardo López</strong></h5>
+        <p class="lead text-muted">
+            (llenar)
+        </p>
+        </div>
+        
+    </p>
+</div>  
+{% endblock %}

@@ -81,10 +81,10 @@
       <div class="row">
         <div class="col-sm-8 col-md-7 py-4">
           <h4 class="text-white">About</h4>
-          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+          <p class="text-muted"></p>
         </div>
         <div class="col-sm-4 offset-md-1 py-4">
-          <h4 class="text-white">Contact</h4>
+          <h4 class="text-white"></h4>
           <ul class="list-unstyled">
             <li><a href="/admin" class="text-white">Administrador</a></li>
             {% if request.user.is_authenticated %}
@@ -92,7 +92,6 @@
             <li><a href="{% url 'blog:editarPerfil' %}" class="text-white">Editar Perfil ( {{ user.first_name }} {{ user.last_name }} )</a></li>
             <li><a href="{% url 'mensajeria:bandejaEntrada' %}" class="text-white">Mensajes</a></li>            
             {% endif %}
-            <li><a href="#" class="text-white">Email me</a></li>
           </ul>
         </div>
       </div>
@@ -102,7 +101,7 @@
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="container">
       <a href="{% url 'blog:inicio' %}" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <img src="media/icons/dieta.png" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></img>
         <strong>Recetas</strong>
       </a>      
       {% if not request.user.is_authenticated %}
@@ -149,7 +148,7 @@
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
     </p>
-    <p class="mb-0"><a href="/">Visit the homepage</a> or read our <a href="">getting started guide</a>.</p>
+    <p class="mb-0"><a href="/">Volver a la página de inicio</a> o lee sobre <a href="{% url 'blog:about' %}">quienes somos</a>.</p>
   </div>
 </footer>
 

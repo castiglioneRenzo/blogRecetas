@@ -137,3 +137,7 @@ def inicio(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
     return render(request, 'album/inicioPublico.html', {"entradas":entradas})
+
+
+def about(request):
+    return render(request, 'album/about.html')
