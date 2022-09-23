@@ -7,7 +7,7 @@
 
 {% block entradasBlock %}
     <div>
-        <a href="{% url 'mensajeria:bandejaEntrada' %}" class="btn btn-sm btn-outline-primary">Volver</a>
+        <a href="javascript:history.back()" class="btn btn-sm btn-outline-primary">Volver</a>
     <h5>De: {{mensaje.emisor}}</h5>
     <h5>Para: {{mensaje.remitente}}</h5>
         <div>

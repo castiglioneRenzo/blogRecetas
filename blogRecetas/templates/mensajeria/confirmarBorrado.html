@@ -3,7 +3,7 @@
 
 {% block seccionCentral %}
 <p class="lead text-muted">Está seguro que desea eliminar el mensaje: {{ mensaje.titulo }}</p>
-<a href="{% url 'mensajeria:bandejaEntrada' %}" class="btn btn-secondary my-2">Cancelar</a>
+<a href="javascript:history.back()" class="btn btn-secondary my-2">Cancelar</a>
 <form action="{% url 'mensajeria:eliminarMensaje' mensaje.id %}" method="post"> {% csrf_token %}
     <button type="submit" class="btn btn-danger my-2">Borrar</a>
 </form>

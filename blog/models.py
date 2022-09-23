@@ -29,3 +29,5 @@ class Entrada(models.Model):
     @property
     def totalLikes(self):
         return self.likes.count()
+    def isLikedBy(self, request):
+        return self.likes.through.objects.filter(user_id=request.user, entrada_id=self.id).exists()

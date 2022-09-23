@@ -6,6 +6,7 @@ from blog.models import *
 from blog.forms import *
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
+import random
 
 def loginRequest(request):
     if request.method == "POST":      
@@ -39,7 +40,7 @@ def registrarUsuario(request):
         return render(request, 'registro/registrarUsuario.html', {"form":form})
 
 
-@login_required        
+@login_required      
 def editarPerfil(request):
     usuario=request.user
     if (request.method=="POST"):
@@ -60,7 +61,7 @@ def editarPerfil(request):
     return render(request, 'registro/editarPerfil.html', {'form':form, 'usuario':usuario})
 
 
-@login_required
+@login_required(login_url='blog:login')
 def nuevaEntrada(request):
     ''' agregar una nueva entrada (debe estar logueado)'''
     if request.method == 'POST':
@@ -129,7 +130,7 @@ def mostrarEntrada(request, entr_id):
 def likeEntrada(request, entr_id):
     entrada=Entrada.objects.get(id=entr_id)
     user=request.user        
-    if(Entrada.likes.through.objects.filter(user_id=user.id).exists()):
+    if(Entrada.likes.through.objects.filter(user_id=user.id,entrada_id=entrada).exists()):
         entrada.likes.remove(user.id)
     else:
         entrada.likes.add(user)
@@ -137,6 +138,30 @@ def likeEntrada(request, entr_id):
 
 
 def inicio(request):
+    ''' mostrar todas las entradas en la página de inicio'''    
+    def getId(l):
+        n = random.choice(l)        
+        l.remove(n)
+        return n
+
+
+    entradas = list(Entrada.objects.all())
+    if len(entradas) >= 4:    
+        max = len(entradas)
+        nums = [n for n in range(0,max)]
+        entrada1 = entradas[getId(nums)]
+        entrada2 = entradas[getId(nums)]
+        entrada3 = entradas[getId(nums)]
+        entrada4 = entradas[getId(nums)]
+    else: 
+        entrada1 = entradas[0]
+        entrada2 = entradas[0]
+        entrada3 = entradas[0]
+        entrada4 = entradas[0]
+    return render(request, 'album/inicioBlog.html', {"entrada1":entrada1,'entrada2':entrada2, 'entrada3':entrada3,'entrada4':entrada4})
+
+
+def mostrarEntradas(request):
     ''' mostrar todas las entradas en la página de inicio'''
     entradas = Entrada.objects.all()
     return render(request, 'album/inicioPublico.html', {"entradas":entradas})
@@ -144,3 +169,13 @@ def inicio(request):
 
 def about(request):
     return render(request, 'album/about.html')
+
+
+def entradasFavoritas(request):
+    entradas_likes = Entrada.likes.through.objects.filter(user_id=request.user)  
+    e = [id for id in entradas_likes]
+    ids = [each.entrada_id for each in e]
+    entradas = []
+    for each in ids:
+        entradas.append(Entrada.objects.get(id=each))
+    return render(request, 'album/entradasFavoritas.html', {'entradas':entradas})

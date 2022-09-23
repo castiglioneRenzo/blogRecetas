@@ -8,7 +8,7 @@
 {% block entradasBlock %}
     {% if form %}
     <div class="shadow p-4 mb-5 bg-body rounded">
-        <a href="{% url 'blog:inicio' %}" class="btn btn-sm btn-outline-primary">Volver</a>
+        <a href="javascript:history.back()" class="btn btn-sm btn-outline-primary">Volver</a>
     <form action="{% url 'blog:nuevaEntrada' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
