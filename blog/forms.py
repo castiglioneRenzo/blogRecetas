@@ -10,7 +10,7 @@ class EntradaFormulario(forms.Form):
     titulo = forms.CharField(max_length=40, widget=forms.TextInput(attrs={'class':'form-control'}))
     subtitulo = forms.CharField(max_length=60, widget=forms.TextInput(attrs={'class':'form-control'}))        
     cuerpo = forms.CharField(widget=CKEditorWidget())
-    imagen = forms.ImageField(required=False)
+    imagen = forms.ImageField(required=True)
 
 
 class RegisterUserForm(UserCreationForm):    

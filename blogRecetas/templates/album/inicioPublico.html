@@ -2,7 +2,7 @@
 {% load static %}
 {% block seccionCentral %}
 <h1 class="fw-light">Blog de Recetas</h1>
-        <p class="lead text-muted">En nuestro blog de recetas vas a encontrar las mejores recetas de cocina de Argentina y México</p>
+        <p class="lead text-muted">En nuestro blog de recetas vas a encontrar las mejores recetas de cocina.</p>
         {% if not request.user.is_authenticated %}
         <p>
           <a href="{% url 'blog:registrarUsuario' %}" class="btn btn-primary my-2">Registrate</a>
@@ -17,9 +17,10 @@
         {% for entry in entradas %}
         <div class="col">
           <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ entry.titulo }}</text></svg>
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{entry.imagen.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#55595c"/></img>
 
             <div class="card-body">
+              <p class="mb-0"><strong>{{entry.titulo}}</strong></p>
               <p class="card-text">{{ entry.subtitulo }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
