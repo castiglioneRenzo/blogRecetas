@@ -1,5 +1,4 @@
 from distutils.command.upload import upload
-from tkinter import CASCADE
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
@@ -29,5 +28,3 @@ class Entrada(models.Model):
     @property
     def totalLikes(self):
         return self.likes.count()
-    def isLikedBy(self, request):
-        return self.likes.through.objects.filter(user_id=request.user, entrada_id=self.id).exists()
