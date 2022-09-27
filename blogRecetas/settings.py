@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog',
     'mensajeria',
+    'django_cleanup.apps.CleanupConfig',
 ]
 
 # Configuracion de ckeditor uploader
