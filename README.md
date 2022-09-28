@@ -1,5 +1,4 @@
 # Blog de Recetas
-## Development
 
 ### Integrantes:
 - Renzo Castiglione
