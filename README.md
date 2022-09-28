@@ -84,3 +84,14 @@
     - Ver mis recetas favoritas
     - Editar mi perfil
     - Mensajes ( app mensajeria )
+
+## Requerimientos
+- Se deben tener instalado los siguientes paquetes:
+    - django==4.1
+    - django-ckeditor
+    - django_cleanup
+    - Pillow
+
+## Enlace a Video
+
+https://youtu.be/ajyookkwIiU
